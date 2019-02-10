@@ -53,4 +53,28 @@ QUnit.module('Тестируем функцию letters', function () {
 		assert.strictEqual(letters('от топота копыт', false), 'а копыт');
 		assert.strictEqual(letters('hello world', false), 'he world');
 	});
+
+	QUnit.test('Ничего не делает, если неправильный первый аргумент', function (assert) {
+        assert.strictEqual(letters(0), 0);
+        assert.strictEqual(letters(Infinity), Infinity);
+        assert.strictEqual(letters(undefined), undefined);
+        assert.strictEqual(letters(null), null);
+        assert.strictEqual(letters('a'), 'a');
+
+        const arr = ['a'];
+        assert.strictEqual(letters(arr), arr);
+
+        const obj = {'a': 'b'};
+        assert.strictEqual(letters(obj), obj);
+    });
+
+    QUnit.test('Ничего не делает, если неправильный второй аргумент', function (assert) {
+        assert.strictEqual(letters('abc', 0), 'abc');
+        assert.strictEqual(letters('abc', Infinity), 'abc');
+        assert.strictEqual(letters('abc', undefined), 'abc');
+        assert.strictEqual(letters('abc', null), 'abc');
+        assert.strictEqual(letters('abc', 'a'), 'abc');
+        assert.strictEqual(letters('abc', ['a']), 'abc');
+        assert.strictEqual(letters('abc', {'a': 'b'}), 'abc');
+    });
 });
