@@ -8,31 +8,26 @@ const letters = ( string, flag ) => {
 		return string;
 	}
 	let result = '';
-	if ( flag === true ) {
-		result += string[0]
-	} else if ( string.lastIndexOf( string[0] ) === 0 ) {
-		result += string[0];
-	} 
+	let characters = {};
+	for ( let i = 0; i < string.length; i++ ) {
+		( string[i] in characters ) ? characters[string[i]]++ : characters[string[i]] = 1
+	}
 	switch ( flag ) {
 		case false:
-			for ( let i = 1; i < string.length; i++ ) {
-				if ( i === string.lastIndexOf( string[i] )) {
-					result += string[i];
-				} 
+			for ( let i = 0; i < string.length; i++ ) {
+				--characters[string[i]];
+				result = characters[string[i]] === 0 ? result + string[i] : result;
 			}
 			break;
 		case true:
-			for ( let i = 1; i < string.length; i++ ) {
-				if ( string.lastIndexOf( string[i], i-1 ) === -1 ) {
-					result += string[i];
-				} 
+			for ( let i = string.length-1; i >= 0; i-- ) {
+				--characters[string[i]];
+				result = characters[string[i]] === 0 ? string[i] + result : result;
 			}
 			break;
 		case undefined:	
-			for ( let i = 1; i < string.length; i++ ) {	
-				if ( ( i === string.lastIndexOf( string[i] ) ) && ( string.lastIndexOf( string[i], i-1 ) === -1 ) ) {	
-					result += string[i];
-				}
+			for ( let i = 0; i < string.length; i++ ) {	
+				result = characters[string[i]] === 1 ? result + string[i] : result;
 			}
 			break;
 		default:
@@ -40,5 +35,3 @@ const letters = ( string, flag ) => {
 	}
 	return result;
 }
-
-console.log(letters('1234'));
