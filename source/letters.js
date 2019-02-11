@@ -4,14 +4,18 @@ const letters = ( string, flag ) => {
 	if ( typeof string !== 'string' ) {
 		return string;
 	}
+
 	if (( flag !== true ) && ( flag !== false ) && ( flag !== undefined )) {
 		return string;
 	}
+
 	let result = '';
 	let characters = {};
+
 	for ( let i = 0; i < string.length; i++ ) {
 		( string[i] in characters ) ? characters[string[i]]++ : characters[string[i]] = 1
 	}
+
 	switch ( flag ) {
 		case false:
 			for ( let i = 0; i < string.length; i++ ) {
@@ -20,7 +24,7 @@ const letters = ( string, flag ) => {
 			}
 			break;
 		case true:
-			for ( let i = string.length-1; i >= 0; i-- ) {
+			for ( let i = string.length - 1; i >= 0; i-- ) {
 				--characters[string[i]];
 				result = characters[string[i]] === 0 ? string[i] + result : result;
 			}
@@ -33,5 +37,6 @@ const letters = ( string, flag ) => {
 		default:
 			return undefined;
 	}
+
 	return result;
 }
