@@ -1,42 +1,43 @@
 'use strict';
 
 const letters = ( string, flag ) => {
-	if ( typeof string !== 'string' ) {
+	if ( ( typeof string !== 'string' ) || ( ( typeof flag !== 'boolean' ) && ( flag !== undefined ) ) ) {
 		return string;
 	}
 
-	if (( flag !== true ) && ( flag !== false ) && ( flag !== undefined )) {
-		return string;
+	let result = new Set();
+	let repeat = new Set();
+
+	// flag can be false or undefined - different logic in every way
+	if ( flag === false ) {
+		string = string.split('').reverse().join('');	
 	}
 
-	let result = '';
-	let characters = {};
-
-	for ( let i = 0; i < string.length; i++ ) {
-		( string[i] in characters ) ? characters[string[i]]++ : characters[string[i]] = 1
+	for ( let ch of string ) {
+		if ( result.has( ch ) ) {
+			continue;
+		}
+		
+		if ( flag !== undefined ) {
+			result.add( ch );
+			continue;
+		}  
+		 
+		if (repeat.has( ch )) {
+		 	continue;
+		}
+	  
+		if ( string.indexOf( ch, (string.indexOf(ch) + 1) ) !== -1 ) {
+			repeat.add( ch );
+			continue;
+		} 
+	  
+		result.add( ch );
 	}
 
-	switch ( flag ) {
-		case false:
-			for ( let i = 0; i < string.length; i++ ) {
-				--characters[string[i]];
-				result = characters[string[i]] === 0 ? result + string[i] : result;
-			}
-			break;
-		case true:
-			for ( let i = string.length - 1; i >= 0; i-- ) {
-				--characters[string[i]];
-				result = characters[string[i]] === 0 ? string[i] + result : result;
-			}
-			break;
-		case undefined:	
-			for ( let i = 0; i < string.length; i++ ) {	
-				result = characters[string[i]] === 1 ? result + string[i] : result;
-			}
-			break;
-		default:
-			return undefined;
+	if ( flag === false ) {
+		return Array.from(result).reverse().join('');	
 	}
 
-	return result;
+	return [...result].join('');
 }
