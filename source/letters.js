@@ -32,5 +32,3 @@ const letters = ( string, flag ) => {
 
 	return [...result].join('');
 }
-
-console.log(letters('111'));
