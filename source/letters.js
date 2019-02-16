@@ -13,26 +13,16 @@ const letters = ( string, flag ) => {
 		string = string.split('').reverse().join('');	
 	}
 
+	let mode = flag === undefined ? 'all' : 'one';
+
 	for ( let ch of string ) {
-		if ( result.has( ch ) ) {
-			continue;
-		}
-		
-		if ( flag !== undefined ) {
+		let hasDouble = string.indexOf( ch ) !== string.lastIndexOf( ch ) ? true : false;
+		if ( !hasDouble ) {
 			result.add( ch );
-			continue;
-		}  
-		 
-		if (repeat.has( ch )) {
-		 	continue;
-		}
-	  
-		if ( string.indexOf( ch, (string.indexOf(ch) + 1) ) !== -1 ) {
+		} else if ( !repeat.has( ch ) ) {
 			repeat.add( ch );
-			continue;
-		} 
-	  
-		result.add( ch );
+			mode === 'one' && result.add( ch );
+		}
 	}
 
 	if ( flag === false ) {
