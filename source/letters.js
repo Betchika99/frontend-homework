@@ -2,7 +2,6 @@
 
 const letters = ( string, flag ) => {
 	if (typeof string !== 'string' || (typeof flag !== 'boolean' && typeof flag !== 'undefined')) {
-		console.log("BBBLAAAAA");
 		return string;
 	}
 
@@ -18,6 +17,7 @@ const letters = ( string, flag ) => {
 
 	for (let ch of string) {
 		let hasDouble = string.indexOf(ch) !== string.lastIndexOf(ch) ? true : false;
+		
 		if (!hasDouble) {
 			result.add(ch);
 		} else if ( !repeat.has(ch) ) {
